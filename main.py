@@ -1,14 +1,19 @@
+"""This is a module for interpolation comparison."""
+
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QComboBox, QPushButton
+from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout, QLabel,
+                             QLineEdit, QComboBox, QPushButton)
 from PyQt5.QtCore import Qt
 
 
 class InterpolationComparison(QWidget):
+    """This is a class for interpolation comparison."""
     def __init__(self):
         super().__init__()
         self.interface()
 
     def interface(self):
+        """This is a function to create GUI."""
         self.setWindowTitle("Interpolation Comparison")
         self.resize(600, 1)
 
@@ -68,15 +73,20 @@ class InterpolationComparison(QWidget):
 
         # Set layout
         self.setLayout(self.layout)
-        self.show()
 
     def keyPressEvent(self, e):
-        """This is to close app using the ESC key"""
+        """This is a function to close app using the ESC key."""
         if e.key() == Qt.Key_Escape:
             self.close()
 
 
-if __name__ == '__main__':
+def main():
+    """This is a function to run app."""
     app = QApplication(sys.argv)
     window = InterpolationComparison()
+    window.show()
     sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()
