@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QComboBox, QPushButton
+from PyQt5.QtCore import Qt
 
 
 class InterpolationComparison(QWidget):
@@ -68,6 +69,11 @@ class InterpolationComparison(QWidget):
         # Set layout
         self.setLayout(self.layout)
         self.show()
+
+    def keyPressEvent(self, e):
+        """This is to close app using the ESC key"""
+        if e.key() == Qt.Key_Escape:
+            self.close()
 
 
 if __name__ == '__main__':
