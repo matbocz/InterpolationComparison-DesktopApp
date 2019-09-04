@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout, QLabel,
-                             QLineEdit, QComboBox, QPushButton)
+                             QLineEdit, QComboBox, QPushButton, QMessageBox)
 from PyQt5.QtCore import Qt
 
 
@@ -14,6 +14,7 @@ class InterpolationComparison(QWidget):
 
     def interface(self):
         """This is a function to create GUI."""
+
         self.setWindowTitle("Interpolation Comparison")
         self.resize(600, 1)
 
@@ -49,6 +50,7 @@ class InterpolationComparison(QWidget):
 
         # Buttons
         self.btn1 = QPushButton("START!")
+        self.btn1.clicked.connect(self.btn1_clicked)
 
         # Labels to layout
         self.layout.addWidget(self.lbl1, 0, 0)
@@ -74,14 +76,55 @@ class InterpolationComparison(QWidget):
         # Set layout
         self.setLayout(self.layout)
 
+    def btn1_clicked(self):
+        """This is a function for handling btn1 clicks."""
+
+        # Checking if the fields are not empty
+        if self.edit1.text() == "" or self.edit2.text(
+        ) == "" or self.edit3.text() == "" or self.edit4.text() == "":
+            QMessageBox.warning(self, "Error", "You must complete all fields!",
+                                QMessageBox.Ok)
+            exit(1)
+
+        # Assigning values ​​from fields
+        try:
+            start = float(self.edit1.text())
+            stop = float(self.edit2.text())
+            samples = int(self.edit3.text())
+        except (ValueError):
+            QMessageBox.warning(self, "Error",
+                                "You have entered an invalid data type!",
+                                QMessageBox.Ok)
+            exit(1)
+        function = self.edit4.text()
+        first_kind = self.box1.currentText()
+        second_kind = self.box2.currentText()
+
+        # Checking if the START value is less than the STOP value
+        if (start >= stop):
+            QMessageBox.warning(
+                self, "Error",
+                "The stop value must be greater than the start value",
+                QMessageBox.Ok)
+            exit(1)
+
+        # Checking if the number of samples is greater than 5
+        if (samples <= 5):
+            QMessageBox.warning(
+                self, "Error", "The number of samples must be greater than 5!",
+                QMessageBox.Ok)
+            exit(1)
+
     def keyPressEvent(self, e):
         """This is a function to close app using the ESC key."""
+
         if e.key() == Qt.Key_Escape:
             self.close()
 
 
 def main():
     """This is a function to run app."""
+
     app = QApplication(sys.argv)
     window = InterpolationComparison()
     window.show()
