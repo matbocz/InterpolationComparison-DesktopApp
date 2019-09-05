@@ -49,10 +49,10 @@ class InterpolationComparison(QWidget):
         ])
 
         # Buttons
-        self.btn1 = QPushButton("START!")
-        self.btn1.clicked.connect(self.btn1_clicked)
-        self.btn2 = QPushButton("RESET")
-        self.btn2.clicked.connect(self.btn2_clicked)
+        self.btn_start = QPushButton("START!")
+        self.btn_start.clicked.connect(self.btn_start_clicked)
+        self.btn_reset = QPushButton("RESET")
+        self.btn_reset.clicked.connect(self.btn_reset_clicked)
 
         # Labels to layout
         self.layout.addWidget(self.lbl1, 0, 0)
@@ -73,14 +73,14 @@ class InterpolationComparison(QWidget):
         self.layout.addWidget(self.box2, 5, 1)
 
         # Buttons to layout
-        self.layout.addWidget(self.btn1, 6, 1)
-        self.layout.addWidget(self.btn2, 6, 0)
+        self.layout.addWidget(self.btn_start, 6, 1)
+        self.layout.addWidget(self.btn_reset, 6, 0)
 
         # Set layout
         self.setLayout(self.layout)
 
-    def btn1_clicked(self):
-        """This is a function for handling btn1 clicks."""
+    def btn_start_clicked(self):
+        """This is a function for handling btn_start clicks."""
 
         # Checking if the fields are not empty
         if self.edit1.text() == "" or self.edit2.text(
@@ -118,8 +118,8 @@ class InterpolationComparison(QWidget):
                 QMessageBox.Ok)
             exit(1)
 
-    def btn2_clicked(self):
-        """This is a function for handling btn2 clicks."""
+    def btn_reset_clicked(self):
+        """This is a function for handling btn_reset clicks."""
         self.edit1.clear()
         self.edit2.clear()
         self.edit3.clear()
