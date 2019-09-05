@@ -51,6 +51,8 @@ class InterpolationComparison(QWidget):
         # Buttons
         self.btn1 = QPushButton("START!")
         self.btn1.clicked.connect(self.btn1_clicked)
+        self.btn2 = QPushButton("RESET")
+        self.btn2.clicked.connect(self.btn2_clicked)
 
         # Labels to layout
         self.layout.addWidget(self.lbl1, 0, 0)
@@ -72,6 +74,7 @@ class InterpolationComparison(QWidget):
 
         # Buttons to layout
         self.layout.addWidget(self.btn1, 6, 1)
+        self.layout.addWidget(self.btn2, 6, 0)
 
         # Set layout
         self.setLayout(self.layout)
@@ -114,6 +117,23 @@ class InterpolationComparison(QWidget):
                 self, "Error", "The number of samples must be greater than 5!",
                 QMessageBox.Ok)
             exit(1)
+
+    def btn2_clicked(self):
+        """This is a function for handling btn2 clicks."""
+        self.edit1.clear()
+        self.edit2.clear()
+        self.edit3.clear()
+        self.edit4.clear()
+        self.box1.clear()
+        self.box1.addItems([
+            "linear", "nearest", "zero", "slinear", "quadratic", "cubic",
+            "previous", "next"
+        ])
+        self.box2.clear()
+        self.box2.addItems([
+            "linear", "nearest", "zero", "slinear", "quadratic", "cubic",
+            "previous", "next"
+        ])
 
     def keyPressEvent(self, e):
         """This is a function to close app using the ESC key."""
