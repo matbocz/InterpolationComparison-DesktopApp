@@ -1,6 +1,6 @@
 """This is an interpolation module."""
 
-from numpy import (sin, cos, tan, exp, linspace)
+from numpy import (sin, cos, tan, exp, linspace)  # pylint: disable=unused-import
 
 from scipy.interpolate import interp1d
 
@@ -20,7 +20,7 @@ class Interpolation:
 
         self.tooltips = []
         self.graph = None
-        self.interp = None
+        self.interp1d = None
         self.x_raw = 0.0
         self.y_raw = 0.0
         self.x_interp = 0.0
@@ -38,28 +38,28 @@ class Interpolation:
 
         # Drawing the raw data graph
         self.x_raw = linspace(self.start, self.stop, num=self.samples)
-        x = self.x_raw  #This is a temporary solution. Needed for eval function.
-        self.y_raw = eval(self.function)
+        x = self.x_raw  #This is a temporary solution. Needed for eval function. pylint: disable=unused-variable, invalid-name
+        self.y_raw = eval(self.function)  # pylint: disable=eval-used
         self.graph.circle(self.x_raw,
                           self.y_raw,
                           legend="raw data",
                           fill_color="#006600",
                           size=8)
 
-        # Drawing the first kind of interpolation
-        self.interp = interp1d(self.x_raw, self.y_raw, kind=self.first_kind)
+        # Drawing the first kind of interpolation graph
+        self.interp1d = interp1d(self.x_raw, self.y_raw, kind=self.first_kind)
         self.x_interp = linspace(self.start, self.stop, num=10 * self.samples)
-        self.y_interp = self.interp(self.x_interp)
+        self.y_interp = self.interp1d(self.x_interp)
         self.graph.line(self.x_interp,
                         self.y_interp,
                         legend=self.first_kind,
                         line_color="#0033cc",
                         line_dash="solid")
 
-        # Drawing the second kind of interpolation
-        self.interp = interp1d(self.x_raw, self.y_raw, kind=self.second_kind)
+        # Drawing the second kind of interpolation graph
+        self.interp1d = interp1d(self.x_raw, self.y_raw, kind=self.second_kind)
         self.x_interp = linspace(self.start, self.stop, num=10 * self.samples)
-        self.y_interp = self.interp(self.x_interp)
+        self.y_interp = self.interp1d(self.x_interp)
         self.graph.line(self.x_interp,
                         self.y_interp,
                         legend=self.second_kind,
@@ -70,7 +70,7 @@ class Interpolation:
         self.graph.legend.location = "bottom_left"
         self.graph.legend.click_policy = "hide"
 
-        # Generating a .html file
-        output_file("InterpolationComparison_results.html",
-                    title=self.function + " - graph")
+        # Export graph to .html file
+        output_file(self.function + "-graph.html",
+                    title=self.function + "-graph")
         show(self.graph)
