@@ -2,15 +2,11 @@
 
 import sys
 
-from numpy import sin, cos, tan, exp, linspace
-
-from scipy.interpolate import interp1d
-
-from bokeh.plotting import figure, show, output_file
-
 from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout, QLabel,
                              QLineEdit, QComboBox, QPushButton, QMessageBox)
 from PyQt5.QtCore import Qt
+
+import interpolation
 
 
 class InterpolationComparison(QWidget):
@@ -126,8 +122,10 @@ class InterpolationComparison(QWidget):
             exit(1)
 
         # Run interpolation function
-        self.interpolation(start, stop, samples, function, first_kind,
-                           second_kind)
+        interp_obj = interpolation.Interpolation(start, stop, samples,
+                                                 function, first_kind,
+                                                 second_kind)
+        interp_obj.interpolation_graph()
 
     def btn_reset_clicked(self):
         """This is a function for handling btn_reset clicks."""
@@ -146,51 +144,6 @@ class InterpolationComparison(QWidget):
             "linear", "nearest", "zero", "slinear", "quadratic", "cubic",
             "previous", "next"
         ])
-
-    def interpolation(self, start, stop, samples, function, first_kind,
-                      second_kind):
-        """This is an interpolation function."""
-
-        # Graph configuration
-        tooltips = [("index", "$index"), ("(x, y)", "($x, $y)")]
-        p = figure(tooltips=tooltips)
-        p.title.text = function + " - graph"
-        p.xaxis.axis_label = "x"
-        p.yaxis.axis_label = function
-
-        # Drawing the raw data graph
-        x = linspace(start, stop, num=samples)
-        y = eval(function)
-        p.circle(x, y, legend="Raw data", fill_color="#006600", size=8)
-
-        # Drawing the first kind of interpolation
-        f = interp1d(x, y, kind=first_kind)
-        x_new = linspace(start, stop, num=10 * samples)
-        y_new = f(x_new)
-        p.line(x_new,
-               y_new,
-               legend=first_kind,
-               line_color="#0033cc",
-               line_dash="solid")
-
-        # Drawing the second kind of interpolation
-        f = interp1d(x, y, kind=second_kind)
-        x_new = linspace(start, stop, num=10 * samples)
-        y_new = f(x_new)
-        p.line(x_new,
-               y_new,
-               legend=second_kind,
-               line_color="#cc0000",
-               line_dash="dashed")
-
-        # Legend configuration
-        p.legend.location = "bottom_left"
-        p.legend.click_policy = "hide"
-
-        # Generating a .html file
-        output_file("InterpolationComparison_results.html",
-                    title=function + " - graph")
-        show(p)
 
     def keyPressEvent(self, e):
         """This is a function to close app using the ESC key."""
