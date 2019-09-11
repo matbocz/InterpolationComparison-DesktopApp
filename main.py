@@ -101,7 +101,7 @@ class ApplicationGUI(QWidget):
             self.start = float(self.edit1.text())
             self.stop = float(self.edit2.text())
             self.samples = int(self.edit3.text())
-        except (ValueError):
+        except (ValueError):  # pylint: disable=superfluous-parens
             QMessageBox.warning(self, "Error",
                                 "You have entered an invalid data type!",
                                 QMessageBox.Ok)
@@ -113,7 +113,7 @@ class ApplicationGUI(QWidget):
         self.second_kind = self.box2.currentText()
 
         # Checking START and STOP values
-        if (self.start >= self.stop):
+        if (self.start >= self.stop):  # pylint: disable=superfluous-parens
             QMessageBox.warning(
                 self, "Error",
                 "The stop value must be greater than the start value",
@@ -121,7 +121,7 @@ class ApplicationGUI(QWidget):
             exit(1)
 
         # Checking the number of samples
-        if (self.samples <= 5):
+        if (self.samples <= 5):  # pylint: disable=superfluous-parens
             QMessageBox.warning(
                 self, "Error", "The number of samples must be greater than 5!",
                 QMessageBox.Ok)
@@ -153,7 +153,7 @@ class ApplicationGUI(QWidget):
             "previous", "next"
         ])
 
-    def keyPressEvent(self, e):
+    def keyPressEvent(self, e):  # pylint: disable=invalid-name
         """This is a function to close app using the ESC key."""
 
         if e.key() == Qt.Key_Escape:
