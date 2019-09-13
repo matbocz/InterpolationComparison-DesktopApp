@@ -2,16 +2,25 @@
  PyQt & Bokeh desktop app. The app allows you to compare two selected types of interpolation.
  
 ## Features
+
+### Basic features
 * You can choose the start and stop of the interpolation graph,
 * you can choose the number of samples in interpolation graph,
 * you can enter the function you want to interpolate,
-* you can choose any two types of interpolation,
+* you can choose any two types of interpolation.
 
-![2019-09-05 (5)](https://user-images.githubusercontent.com/34821903/64358312-86b68300-d006-11e9-95b2-8120552689dc.png)
+![2019-09-13 (2)](https://user-images.githubusercontent.com/34821903/64882301-1ee2e680-d65d-11e9-8136-016627d883f4.png)
 
-* the graph is generated in a web browser,
+### Graph features
+* The graph is generated in a web browser,
 * you can see detailed information about each point on the graph,
 * you can save the graph to img,
-* and a lot more.
+* and some more.
 
-![2019-09-05 (6)](https://user-images.githubusercontent.com/34821903/64358628-1c521280-d007-11e9-9ba1-c2d6726f1c0f.png)
+![2019-09-13 (3)](https://user-images.githubusercontent.com/34821903/64882325-2b673f00-d65d-11e9-9f11-75724f6a7e32.png)
+
+### Table features
+* The table is generated in a web browser,
+* you can see the exact values ​​of each interpolated point.
+
+![2019-09-13 (4)](https://user-images.githubusercontent.com/34821903/64882574-b5170c80-d65d-11e9-8b68-ba644baeff35.png)
