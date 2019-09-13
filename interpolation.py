@@ -1,5 +1,7 @@
 """This is an interpolation module."""
 
+from datetime import datetime
+
 from numpy import (sin, cos, tan, exp, linspace)  # pylint: disable=unused-import
 
 from scipy.interpolate import interp1d
@@ -19,6 +21,8 @@ class Interpolation:
         self.function = function
         self.first_kind = first_kind
         self.second_kind = second_kind
+
+        self.now = datetime.now().strftime("%d-%m-%Y")
 
         self.tooltips = []
         self.graph = None
@@ -40,7 +44,7 @@ class Interpolation:
         # Graph configuration
         self.tooltips = [("index", "$index"), ("(x, y)", "($x, $y)")]
         self.graph = figure(tooltips=self.tooltips)
-        self.graph.title.text = self.function + " - graph"
+        self.graph.title.text = self.function + " - " + self.first_kind + " - " + self.second_kind
         self.graph.xaxis.axis_label = "x"
         self.graph.yaxis.axis_label = self.function
 
@@ -79,8 +83,10 @@ class Interpolation:
         self.graph.legend.click_policy = "hide"
 
         # Export graph to .html file
-        output_file(self.function + "-graph.html",
-                    title=self.function + "-graph")
+        output_file(self.now + ", " + self.first_kind + ", " +
+                    self.second_kind + " - graph.html",
+                    title=self.now + ", " + self.first_kind + ", " +
+                    self.second_kind + " - graph.html")
         show(self.graph)
 
     def interpolation_table(self, kind):
@@ -100,11 +106,12 @@ class Interpolation:
         self.source = ColumnDataSource(data)
 
         self.columns = [
-            TableColumn(field="x", title="x"),
+            TableColumn(field="x",
+                        title="x | " + self.function + " - " + self.kind),
             TableColumn(field="y", title="y")
         ]
         self.data_table = DataTable(source=self.source, columns=self.columns)
 
-        output_file(self.function + "-" + self.kind + "-table.html",
-                    title=self.function + "-" + self.kind + "-table.html")
+        output_file(self.now + ", " + self.kind + " - table.html",
+                    title=self.now + ", " + self.kind + " - table.html")
         show(self.data_table)
