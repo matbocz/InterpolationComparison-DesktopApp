@@ -131,7 +131,11 @@ class ApplicationGUI(QWidget):
         interp = interpolation.Interpolation(self.start, self.stop,
                                              self.samples, self.function,
                                              self.first_kind, self.second_kind)
+
         interp.interpolation_graph()
+
+        interp.interpolation_table(self.first_kind)
+        interp.interpolation_table(self.second_kind)
 
     def btn_reset_clicked(self):
         """This is a function for handling btn_reset clicks."""

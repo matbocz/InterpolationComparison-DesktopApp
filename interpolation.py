@@ -5,6 +5,8 @@ from numpy import (sin, cos, tan, exp, linspace)  # pylint: disable=unused-impor
 from scipy.interpolate import interp1d
 
 from bokeh.plotting import (figure, show, output_file)
+from bokeh.models import ColumnDataSource
+from bokeh.models.widgets import DataTable, TableColumn
 
 
 class Interpolation:
@@ -25,6 +27,12 @@ class Interpolation:
         self.y_raw = 0.0
         self.x_interp = 0.0
         self.y_interp = 0.0
+
+        self.data = dict()
+        self.source = None
+        self.columns = []
+        self.data_table = None
+        self.kind = ""
 
     def interpolation_graph(self):
         """This is a function to draw an interpolation graph."""
@@ -74,3 +82,29 @@ class Interpolation:
         output_file(self.function + "-graph.html",
                     title=self.function + "-graph")
         show(self.graph)
+
+    def interpolation_table(self, kind):
+        """This is a function to create a table with interpolation values."""
+
+        self.kind = kind
+
+        self.x_raw = linspace(self.start, self.stop, num=self.samples)
+        x = self.x_raw  #This is a temporary solution. Needed for eval function. pylint: disable=unused-variable, invalid-name
+        self.y_raw = eval(self.function)  # pylint: disable=eval-used
+
+        self.interp1d = interp1d(self.x_raw, self.y_raw, kind=self.kind)
+        self.x_interp = linspace(self.start, self.stop, num=10 * self.samples)
+        self.y_interp = self.interp1d(self.x_interp)
+
+        data = dict(x=self.x_interp, y=self.y_interp)
+        self.source = ColumnDataSource(data)
+
+        self.columns = [
+            TableColumn(field="x", title="x"),
+            TableColumn(field="y", title="y")
+        ]
+        self.data_table = DataTable(source=self.source, columns=self.columns)
+
+        output_file(self.function + "-" + self.kind + "-table.html",
+                    title=self.function + "-" + self.kind + "-table.html")
+        show(self.data_table)
